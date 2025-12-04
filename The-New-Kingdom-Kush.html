@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ancient Egypt: New Kingdom & Kush</title>
+    <title>Ancient Egypt: New Kingdom Complete</title>
     <!-- Fonts: Fredoka for headings (friendly/rounded), Open Sans for body (readable) -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <!-- jsPDF Library for PDF generation -->
@@ -339,7 +339,7 @@
 
 <div id="app-container">
     <header>
-        <h1>New Kingdom & Kush</h1>
+        <h1>New Kingdom Complete</h1>
         <div id="progress-bar-container">
             <div id="progress-bar"></div>
         </div>
@@ -349,17 +349,17 @@
         <!-- Slide 1: Welcome -->
         <div class="slide active" id="slide-1">
             <h2>Welcome, Gabriel!</h2>
-            <p>Today we will explore the <strong>Golden Age</strong> of Egypt.</p>
+            <p>Today we will explore the full story of the <strong>New Kingdom</strong>.</p>
             <ol>
-                <li>How the New Kingdom began (Ahmose).</li>
-                <li>The Female Pharaoh (Hatshepsut).</li>
-                <li>The Warrior King & The Kingdom of Kush.</li>
-                <li>The Great Builder (Ramses II).</li>
-                <li>The Boy King (Tutankhamun) & Ramses III.</li>
+                <li><strong>The Beginning:</strong> Ahmose & The Hyksos.</li>
+                <li><strong>The Golden Age:</strong> Hatshepsut, Thutmose III, & Kush.</li>
+                <li><strong>The Big Change:</strong> Akhenaten & Nefertiti (One God).</li>
+                <li><strong>The Restoration:</strong> King Tut & Ramses II.</li>
+                <li><strong>The End:</strong> Ramses III & The Collapse.</li>
             </ol>
             <div class="hint-box">
                 <span class="hint-icon">💡</span>
-                <span><strong>Tip:</strong> We added a new kingdom called <strong>Kush</strong>. Let's find out who they are!</span>
+                <span><strong>Tip:</strong> Pay attention to how the religion changed and then changed back.</span>
             </div>
             <div class="btn-container">
                 <button class="btn-next" onclick="nextSlide()">Start Part 1</button>
@@ -474,35 +474,37 @@
             </div>
             <div class="btn-container">
                 <button class="btn-back" onclick="prevSlide()">Back</button>
-                <button class="btn-next" onclick="nextSlide()">Ramses II</button>
+                <button class="btn-next" onclick="nextSlide()">Akhenaten & Nefertiti</button>
             </div>
         </div>
 
-        <!-- Slide 8: Ramses II -->
+        <!-- Slide 8: Akhenaten & Nefertiti (UPDATED) -->
         <div class="slide" id="slide-8">
-            <h2>4. Ramses the Great</h2>
-            <p><strong>Ramses II</strong> ruled for over 60 years! He is famous for building giant temples and huge statues.</p>
-            
-            <div class="img-placeholder">
-                <img src="https://static.wixstatic.com/media/b2863d_c676c03a575042a7acb24510e751abae~mv2.jpg" alt="Huge statues of Ramses II" onclick="openModal(this.src)">
-                <div class="click-hint" onclick="openModal(document.querySelector('#slide-8 img').src)">
-                    <span>🔍</span> Click to see the Giant Statues
-                </div>
+            <h2>4. Akhenaten & Nefertiti</h2>
+            <p>Later, Pharaoh <strong>Akhenaten</strong> and Queen <strong>Nefertiti</strong> changed everything. Nefertiti was very powerful, almost like a Pharaoh herself.</p>
+            <ul>
+                <li><strong>One God:</strong> Akhenaten said everyone must stop worshipping the old gods. He only worshipped <strong>Aten</strong> (the Sun Disk).</li>
+                <li><strong>Closed Temples:</strong> He locked the doors of the temples for Amun and other gods. The priests were furious!</li>
+                <li><strong>New Art:</strong> He changed how people were drawn. In art, they had long heads, bellies, and skinny arms.</li>
+            </ul>
+            <div class="hint-box">
+                <span class="hint-icon">☀️</span>
+                <span>This was a huge shock to Egypt. People missed their old traditions.</span>
             </div>
-
-            <p>He also signed the world's first <strong>Peace Treaty</strong> with the Hittites.</p>
-            
             <div class="btn-container">
                 <button class="btn-back" onclick="prevSlide()">Back</button>
                 <button class="btn-next" onclick="nextSlide()">King Tut</button>
             </div>
         </div>
 
-        <!-- Slide 9: King Tut -->
+        <!-- Slide 9: King Tut (UPDATED) -->
         <div class="slide" id="slide-9">
-            <h2>5. King Tut: The Boy King</h2>
-            <p><strong>Tutankhamun</strong> (King Tut) became Pharaoh when he was only <strong>9 years old!</strong></p>
-            <p>Sadly, he died when he was only 19.</p>
+            <h2>5. King Tut: The Return to Normal</h2>
+            <p>When Akhenaten died, his religion collapsed because the people hated it. His son, <strong>Tutankhamun</strong>, became King at age 9.</p>
+            <ul>
+                <li>He opened the old temples again.</li>
+                <li>He brought back the old gods (like Amun).</li>
+            </ul>
 
             <div class="img-placeholder">
                 <img src="https://static.wixstatic.com/media/b2863d_c8325d6c3c7c44398377e7d2bebe3b88~mv2.jpg" alt="Howard Carter discovering King Tut's Tomb" onclick="openModal(this.src)">
@@ -511,7 +513,27 @@
                 </div>
             </div>
 
-            <p>He is famous because in 1922, <strong>Howard Carter</strong> found his tomb <strong>untouched</strong>. It was full of gold treasure!</p>
+            <p>Tut is famous today because in 1922, <strong>Howard Carter</strong> found his tomb <strong>untouched</strong> and full of gold!</p>
+            
+            <div class="btn-container">
+                <button class="btn-back" onclick="prevSlide()">Back</button>
+                <button class="btn-next" onclick="nextSlide()">Ramses II</button>
+            </div>
+        </div>
+
+        <!-- Slide 10: Ramses II -->
+        <div class="slide" id="slide-10">
+            <h2>6. Ramses the Great</h2>
+            <p><strong>Ramses II</strong> ruled for over 60 years! He was a powerful builder.</p>
+            
+            <div class="img-placeholder">
+                <img src="https://static.wixstatic.com/media/b2863d_c676c03a575042a7acb24510e751abae~mv2.jpg" alt="Huge statues of Ramses II" onclick="openModal(this.src)">
+                <div class="click-hint" onclick="openModal(document.querySelector('#slide-10 img').src)">
+                    <span>🔍</span> Click to see the Giant Statues
+                </div>
+            </div>
+
+            <p>He also signed the world's first <strong>Peace Treaty</strong> with the Hittites.</p>
             
             <div class="btn-container">
                 <button class="btn-back" onclick="prevSlide()">Back</button>
@@ -519,18 +541,34 @@
             </div>
         </div>
 
-        <!-- Slide 10: Ramses III -->
-        <div class="slide" id="slide-10">
-            <h2>6. Ramses III: The Defender</h2>
-            <p>Our last Pharaoh is <strong>Ramses III</strong>.</p>
-            <p>He was the last "Great" Pharaoh of the New Kingdom. He is famous for saving Egypt from invaders.</p>
+        <!-- Slide 11: Ramses III -->
+        <div class="slide" id="slide-11">
+            <h2>7. Ramses III: The Defender</h2>
+            <p><strong>Ramses III</strong> was the last "Great" Pharaoh. He had to defend Egypt from a big danger.</p>
             <ul>
-                <li>He fought the <strong>"Sea Peoples"</strong> (pirates who came from the ocean).</li>
-                <li>He won the battle, but Egypt started to become weak after him.</li>
+                <li>He fought the <strong>"Sea Peoples"</strong> (pirates from the ocean).</li>
+                <li>He won the battles, but the wars made Egypt lose money.</li>
+            </ul>
+            <div class="btn-container">
+                <button class="btn-back" onclick="prevSlide()">Back</button>
+                <button class="btn-next" onclick="nextSlide()">The Collapse</button>
+            </div>
+        </div>
+
+        <!-- Slide 12: The Collapse -->
+        <div class="slide" id="slide-12">
+            <h2>8. The End of the New Kingdom</h2>
+            <p>After Ramses III, things fell apart. This is called the <strong>Collapse</strong>.</p>
+            <p><strong>Why did the Golden Age end?</strong></p>
+            <ul>
+                <li><strong>Weak Kings:</strong> The Pharaohs after Ramses III were not strong.</li>
+                <li><strong>Powerful Priests:</strong> The priests of Amun took control of the South.</li>
+                <li><strong>No Money:</strong> Wars cost too much gold.</li>
+                <li><strong>Tomb Robbers:</strong> People started stealing from the tombs because they were poor.</li>
             </ul>
             <div class="hint-box">
-                <span class="hint-icon">🛡️</span>
-                <span>Ramses III <strong>defended</strong> Egypt, but the Golden Age was ending.</span>
+                <span class="hint-icon">📉</span>
+                <span>Egypt split into two parts again, ending the New Kingdom.</span>
             </div>
             <div class="btn-container">
                 <button class="btn-back" onclick="prevSlide()">Back</button>
@@ -538,16 +576,18 @@
             </div>
         </div>
 
-        <!-- Slide 11: Summary -->
-        <div class="slide" id="slide-11">
+        <!-- Slide 13: Summary -->
+        <div class="slide" id="slide-13">
             <h2>Let's Remember</h2>
             <ul>
-                <li><strong>Ahmose:</strong> Kicked out the Hyksos.</li>
-                <li><strong>Hatshepsut:</strong> The female Pharaoh who traded.</li>
-                <li><strong>Thutmose III:</strong> Conquered the <strong>Kingdom of Kush</strong>.</li>
-                <li><strong>Ramses II:</strong> The builder who made peace treaties.</li>
-                <li><strong>King Tut:</strong> The boy king (started at 9!) with the golden treasure.</li>
-                <li><strong>Ramses III:</strong> Defended Egypt from the Sea Peoples.</li>
+                <li><strong>Ahmose:</strong> Kicked out Hyksos.</li>
+                <li><strong>Hatshepsut:</strong> Trade & Peace.</li>
+                <li><strong>Thutmose III:</strong> War & Kush (Gold).</li>
+                <li><strong>Akhenaten:</strong> Closed temples, One God (Aten), Strange Art.</li>
+                <li><strong>King Tut:</strong> Restored old gods & Golden Tomb.</li>
+                <li><strong>Ramses II:</strong> Giant Statues & Peace Treaty.</li>
+                <li><strong>Ramses III:</strong> Defended against Sea Peoples.</li>
+                <li><strong>Collapse:</strong> Weak kings and robbers ended the era.</li>
             </ul>
             <div class="btn-container">
                 <button class="btn-back" onclick="prevSlide()">Back</button>
@@ -555,24 +595,24 @@
             </div>
         </div>
 
-        <!-- Slide 12: Quiz -->
-        <div class="slide" id="slide-12">
+        <!-- Slide 14: Quiz -->
+        <div class="slide" id="slide-14">
             <h2>Final Quiz</h2>
-            <p>Match the Pharaoh or Kingdom to the fact!</p>
+            <p>Match the Pharaoh or Event!</p>
 
             <!-- Q1 -->
             <div style="margin-bottom: 20px;">
-                <p><strong>1. Who preferred Trade over War?</strong></p>
-                <button class="option-btn" onclick="checkAnswer(this, 'correct', 'q1-fb')">Hatshepsut</button>
-                <button class="option-btn" onclick="checkAnswer(this, 'wrong', 'q1-fb')">Thutmose III</button>
+                <p><strong>1. What did Akhenaten change?</strong></p>
+                <button class="option-btn" onclick="checkAnswer(this, 'correct', 'q1-fb')">He closed temples and worshipped only one god (Aten).</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'wrong', 'q1-fb')">He built the Great Sphinx.</button>
                 <div id="q1-fb" class="feedback-msg"></div>
             </div>
 
             <!-- Q2 -->
             <div style="margin-bottom: 20px;">
                 <p><strong>2. What was the Kingdom of Kush famous for?</strong></p>
-                <button class="option-btn" onclick="checkAnswer(this, 'wrong', 'q2-fb')">Building Pyramids of Ice.</button>
-                <button class="option-btn" onclick="checkAnswer(this, 'correct', 'q2-fb')">Deep Gold Mines and Expert Archers.</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'wrong', 'q2-fb')">Ice.</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'correct', 'q2-fb')">Gold Mines and Archers.</button>
                 <div id="q2-fb" class="feedback-msg"></div>
             </div>
 
@@ -580,23 +620,23 @@
             <div style="margin-bottom: 20px;">
                 <p><strong>3. Who signed the first Peace Treaty?</strong></p>
                 <button class="option-btn" onclick="checkAnswer(this, 'correct', 'q3-fb')">Ramses II (The Great)</button>
-                <button class="option-btn" onclick="checkAnswer(this, 'wrong', 'q3-fb')">Ahmose</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'wrong', 'q3-fb')">King Tut</button>
                 <div id="q3-fb" class="feedback-msg"></div>
             </div>
 
             <!-- Q4 -->
             <div style="margin-bottom: 20px;">
-                <p><strong>4. Why is King Tut famous?</strong></p>
-                <button class="option-btn" onclick="checkAnswer(this, 'correct', 'q4-fb')">His tomb was found full of gold treasures.</button>
-                <button class="option-btn" onclick="checkAnswer(this, 'wrong', 'q4-fb')">He lived to be 100 years old.</button>
+                <p><strong>4. Who invaded Egypt at the end (fought Ramses III)?</strong></p>
+                <button class="option-btn" onclick="checkAnswer(this, 'correct', 'q4-fb')">The Sea Peoples</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'wrong', 'q4-fb')">The Romans</button>
                 <div id="q4-fb" class="feedback-msg"></div>
             </div>
 
             <!-- Q5 -->
             <div style="margin-bottom: 20px;">
-                <p><strong>5. Who did Ramses III fight to save Egypt?</strong></p>
-                <button class="option-btn" onclick="checkAnswer(this, 'correct', 'q5-fb')">The Sea Peoples</button>
-                <button class="option-btn" onclick="checkAnswer(this, 'wrong', 'q5-fb')">The Space Aliens</button>
+                <p><strong>5. Why did Akhenaten's religion collapse?</strong></p>
+                <button class="option-btn" onclick="checkAnswer(this, 'wrong', 'q5-fb')">Because everyone loved it.</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'correct', 'q5-fb')">People missed their old traditions and King Tut restored the old gods.</button>
                 <div id="q5-fb" class="feedback-msg"></div>
             </div>
 
@@ -606,14 +646,14 @@
             </div>
         </div>
 
-        <!-- Slide 13: Finish -->
-        <div class="slide" id="slide-13">
+        <!-- Slide 15: Finish -->
+        <div class="slide" id="slide-15">
             <h2>Excellent Work, Gabriel!</h2>
-            <p>You are an expert on the New Kingdom and the Kingdom of Kush!</p>
+            <p>You have finished the entire story of the New Kingdom!</p>
             <p>Click the button below to save your official report.</p>
             
             <button class="btn-pdf" onclick="generatePDF()">
-                Download My Pharaoh & Kush Report
+                Download My Full History Report
             </button>
         </div>
 
@@ -629,7 +669,7 @@
 <script>
     // --- State Management ---
     let currentSlide = 1;
-    const totalSlides = 13; 
+    const totalSlides = 15; // Increased slide count
     
     // Tracks quiz answers for the PDF 
     let quizResults = {
@@ -731,7 +771,7 @@
         // Header
         addLine("Student: Gabriel Mendoza", 16, true);
         addLine(`Date: ${date}`, 12);
-        addLine("Subject: Ancient Egypt - New Kingdom & Kush", 12);
+        addLine("Subject: Ancient Egypt - New Kingdom Complete", 12);
         
         y += 5;
         doc.setDrawColor(150);
@@ -742,12 +782,13 @@
         addLine("Summary of Learning:", 14, true);
         y += 2;
         addLine("1. Ahmose defeated the Hyksos invaders to start the New Kingdom.");
-        addLine("2. Hatshepsut was a female Pharaoh who focused on Trade (Expedition to Punt).");
-        addLine("3. Thutmose III was a Warrior King who conquered the Kingdom of Kush.");
-        addLine("4. The Kingdom of Kush (Nubia) was famous for Gold Mines and Expert Archers.");
-        addLine("5. Ramses II (The Great) built giant statues and made the first Peace Treaty.");
-        addLine("6. King Tut was the 'Boy King' (started at 9) with the untouched golden treasure.");
-        addLine("7. Ramses III fought the 'Sea Peoples' to defend Egypt.");
+        addLine("2. Hatshepsut (Trade) & Thutmose III (War & Kush).");
+        addLine("3. Akhenaten & Nefertiti closed temples and worshipped One God (Aten).");
+        addLine("4. They changed the art style to show people with long heads.");
+        addLine("5. King Tut restored the old gods; his tomb was found untouched.");
+        addLine("6. Ramses II built giant statues and made peace treaties.");
+        addLine("7. Ramses III defended Egypt from the Sea Peoples.");
+        addLine("8. The New Kingdom collapsed due to weak kings and robbers.");
 
         y += 10;
         
@@ -756,11 +797,11 @@
         y += 2;
 
         const results = [
-            { id: 'q1', text: "Q1: Hatshepsut (Trade vs War)" },
-            { id: 'q2', text: "Q2: Kingdom of Kush (Gold & Archers)" },
+            { id: 'q1', text: "Q1: Akhenaten (One God & Closed Temples)" },
+            { id: 'q2', text: "Q2: Kingdom of Kush (Gold)" },
             { id: 'q3', text: "Q3: Ramses II (Peace Treaty)" },
-            { id: 'q4', text: "Q4: King Tut (Treasures)" },
-            { id: 'q5', text: "Q5: Ramses III (Sea Peoples)" }
+            { id: 'q4', text: "Q4: Sea Peoples (Invaders)" },
+            { id: 'q5', text: "Q5: Why Atenism Collapsed (People hated it)" }
         ];
 
         let score = 0;
@@ -778,7 +819,7 @@
         addLine(`Final Score: ${score} / 5`, 12, true);
 
         // Save
-        doc.save("Gabriel_NewKingdom_Kush.pdf");
+        doc.save("Gabriel_NewKingdom_Complete.pdf");
     }
 
     // Initialize
