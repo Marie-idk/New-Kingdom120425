@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ancient Egypt: New Kingdom & Kush</title>
+    <!-- Fonts: Fredoka for headings (friendly/rounded), Open Sans for body (readable) -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- jsPDF Library for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        :root {
+            /* Palette: Sensory-friendly Pastels */
+            --bg-sand: #fdf6e3;
+            --card-bg: #ffffff;
+            --text-dark: #2c3e50;
+            --text-light: #5d6d7e;
+            
+            /* Playful but calm accents */
+            --accent-gold: #f9e79f; 
+            --accent-gold-dark: #f1c40f;
+            --accent-teal: #a2d9ce;
+            --accent-teal-dark: #16a085;
+            --accent-coral: #f1948a;
+            --accent-coral-dark: #e74c3c;
+            --accent-blue: #aed6f1;
+            --accent-blue-dark: #2980b9;
+            --accent-purple: #d7bde2;
+            --accent-purple-dark: #884ea0;
+            
+            --radius: 12px;
+            --shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--bg-sand);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Main Container */
+        #app-container {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 600px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border: 3px solid var(--accent-gold);
+        }
+
+        /* Header & Progress */
+        header {
+            background: var(--accent-teal);
+            padding: 15px;
+            text-align: center;
+            color: #fff;
+            border-bottom: 2px solid var(--accent-teal-dark);
+        }
+
+        h1 {
+            font-family: 'Fredoka', sans-serif;
+            margin: 0;
+            font-size: 1.3rem;
+            color: #2c3e50; 
+        }
+
+        #progress-bar-container {
+            background: rgba(255,255,255,0.5);
+            height: 8px;
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        #progress-bar {
+            background: var(--accent-gold-dark);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease-out;
+        }
+
+        /* Content Area */
+        main {
+            padding: 20px;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .slide {
+            display: none;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        h2 {
+            font-family: 'Fredoka', sans-serif;
+            color: var(--accent-teal-dark);
+            font-size: 1.4rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            border-bottom: 2px dashed var(--bg-sand);
+            padding-bottom: 5px;
+        }
+
+        p {
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+        }
+
+        /* List Styling */
+        ul, ol {
+            padding-left: 0;
+            margin: 10px 0;
+        }
+
+        li {
+            list-style: none;
+            background: #f8f9f9;
+            margin-bottom: 8px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-blue);
+            font-size: 1rem;
+        }
+
+        /* Visual Hints & Placeholders */
+        .hint-box {
+            background-color: #fff9c4; /* Light yellow */
+            border: 2px solid var(--accent-gold-dark);
+            border-radius: 8px;
+            padding: 12px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .hint-icon {
+            font-size: 1.5rem;
+        }
+
+        /* Map/Image Styles with Expand Feature */
+        .img-placeholder {
+            width: 100%;
+            background-color: #e3f2fd;
+            border: 2px dashed var(--accent-blue-dark);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+            padding: 10px; 
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .img-placeholder img {
+            width: 100%;
+            max-height: 250px;
+            object-fit: contain;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            border-radius: 4px;
+        }
+
+        .img-placeholder img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .click-hint {
+            font-size: 0.9rem;
+            color: var(--accent-blue-dark);
+            margin-top: 8px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 95%;
+            max-height: 85vh;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            background: white;
+            padding: 5px;
+        }
+
+        .close-modal-btn {
+            margin-top: 15px;
+            background: var(--accent-coral-dark);
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Interactive Buttons */
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        button {
+            font-family: 'Fredoka', sans-serif;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px; 
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.1s, opacity 0.2s;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .btn-next {
+            background-color: var(--accent-teal-dark);
+            color: white;
+            margin-left: auto; 
+        }
+
+        .btn-back {
+            background-color: #ecf0f1;
+            color: var(--text-light);
+        }
+
+        .btn-pdf {
+            background-color: var(--accent-coral-dark);
+            color: white;
+            width: 100%;
+            margin-top: 15px;
+            font-size: 1.1rem;
+            padding: 15px;
+        }
+
+        /* Quiz Styles */
+        .option-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: white;
+            border: 2px solid #eee;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            padding: 12px;
+            transition: all 0.2s;
+        }
+
+        .option-btn:hover {
+            border-color: var(--accent-blue);
+            background: #f4f6f7;
+        }
+
+        .option-btn.selected {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue-dark);
+            color: #000;
+        }
+
+        .feedback-msg {
+            font-weight: bold;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .correct { background-color: #d5f5e3; color: #196f3d; }
+        .incorrect { background-color: #fadbd8; color: #943126; }
+
+        strong {
+            color: var(--accent-coral-dark);
+        }
+
+        em {
+            color: var(--text-light);
+        }
+    </style>
+</head>
+<body>
+
+<div id="app-container">
+    <header>
+        <h1>New Kingdom & Kush</h1>
+        <div id="progress-bar-container">
+            <div id="progress-bar"></div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Slide 1: Welcome -->
+        <div class="slide active" id="slide-1">
+            <h2>Welcome, Gabriel!</h2>
+            <p>Today we will explore the <strong>Golden Age</strong> of Egypt.</p>
+            <ol>
+                <li>How the New Kingdom began (Ahmose).</li>
+                <li>The Female Pharaoh (Hatshepsut).</li>
+                <li>The Warrior King & The Kingdom of Kush.</li>
+                <li>The Great Builder (Ramses II).</li>
+                <li>The Boy King (Tutankhamun) & Ramses III.</li>
+            </ol>
+            <div class="hint-box">
+                <span class="hint-icon">💡</span>
+                <span><strong>Tip:</strong> We added a new kingdom called <strong>Kush</strong>. Let's find out who they are!</span>
+            </div>
+            <div class="btn-container">
+                <button class="btn-next" onclick="nextSlide()">Start Part 1</button>
+            </div>
+        </div>
+
+        <!-- Slide 2: The Hyksos -->
+        <div class="slide" id="slide-2">
+            <h2>1. The Beginning</h2>
+            <p>Before the Golden Age, Egypt was weak. Invaders called the <strong>Hyksos</strong> took over the North.</p>
+            <ul>
+                <li>They had <strong>chariots</strong> (carts pulled by horses).</li>
+                <li>They had strong metal weapons.</li>
+            </ul>
+            <div class="btn-container">
+                <button class="btn-back" onclick="prevSlide()">Back</button>
+                <button class="btn-next" onclick="nextSlide()">The Map</button>
+            </div>
+        </div>
+
+        <!-- Slide 3: Map Visual -->
+        <div class="slide" id="slide-3">
+            <h2>The Divided Land</h2>
+            <p>Egypt was cut in half!</p>
+            
+            <!-- Map Placeholder with CLICK Action -->
+            <div class="img-placeholder">
+                <img src="https://static.wixstatic.com/media/b2863d_6d1e1c8884b545ac87bbf590f27be9dd~mv2.jpg" alt="Map of Ancient Egypt" onclick="openModal(this.src)">
+                <div class="click-hint" onclick="openModal(document.querySelector('#slide-3 img').src)">
+                    <span>🔍</span> Click map to make it BIGGER
+                </div>
+            </div>
+
+            <p style="text-align:center; margin-top: -10px;">
+                <span style="color:var(--accent-coral-dark);">North (Hyksos)</span> 
+                vs 
+                <span style="color:var(--accent-teal-dark);">South (Egyptians)</span>
+            </p>
+
+            <div class="btn-container">
+                <button class="btn-back" onclick="prevSlide()">Back</button>
+                <button class="btn-next" onclick="nextSlide()">Ahmose Wins</button>
+            </div>
+        </div>
+
+        <!-- Slide 4: Ahmose Wins -->
+        <div class="slide" id="slide-4">
+            <h2>Ahmose Fights Back</h2>
+            <p><strong>Pharaoh Ahmose</strong> was smart. He copied the Hyksos and built his own chariots.</p>
+            <ul>
+                <li>He chased the Hyksos out of Egypt.</li>
+                <li>He united the country again.</li>
+                <li>This started the <strong>New Kingdom</strong> (The Empire Age).</li>
+            </ul>
+            <div class="btn-container">
+                <button class="btn-back" onclick="prevSlide()">Back</button>
+                <button class="btn-next" onclick="nextSlide()">Hatshepsut</button>
+            </div>
+        </div>
+
+        <!-- Slide 5: Hatshepsut -->
+        <div class="slide" id="slide-5">
+            <h2>2. Hatshepsut: The Trader</h2>
+            <p>Hatshepsut was a rare female Pharaoh. She wore a <strong>false beard</strong> to look powerful.</p>
+            <p>She didn't like war. She liked <strong>Trade</strong>.</p>
+            <ul>
+                <li>She sent ships to the land of <strong>Punt</strong>.</li>
+                <li>She brought back gold, ivory, and incense trees.</li>
+            </ul>
+            <div class="hint-box">
+                <span class="hint-icon">⚖️</span>
+                <span><strong>Trade</strong> = Buying and selling things with neighbors.</span>
+            </div>
+            <div class="btn-container">
+                <button class="btn-back" onclick="prevSlide()">Back</button>
+                <button class="btn-next" onclick="nextSlide()">Thutmose III</button>
+            </div>
+        </div>
+
+        <!-- Slide 6: Thutmose III -->
+        <div class="slide" id="slide-6">
+            <h2>3. Thutmose III: The Warrior</h2>
+            <p>After Hatshepsut, her stepson <strong>Thutmose III</strong> became King.</p>
+            <p>He was very different. He was a great general.</p>
+            <ul>
+                <li>He fought many battles to expand Egypt's borders.</li>
+                <li>He conquered the <strong>Kingdom of Kush</strong> in the South.</li>
+                <li>He made the Egyptian Empire huge!</li>
+            </ul>
+            <div class="hint-box">
+                <span class="hint-icon">⚔️</span>
+                <span>Hatshepsut used <strong>Trade</strong>. Thutmose used <strong>Might</strong>.</span>
+            </div>
+            <div class="btn-container">
+                <button class="btn-back" onclick="prevSlide()">Back</button>
+                <button class="btn-next" onclick="nextSlide()">The Kingdom of Kush</button>
+            </div>
+        </div>
+        
+        <!-- Slide 7: The Kingdom of Kush -->
+        <div class="slide" id="slide-7">
+            <h2>The Kingdom of Kush</h2>
+            <p>To the south of Egypt lived the people of <strong>Kush</strong> (also called Nubia).</p>
+            <p>They were a powerful kingdom with their own culture.</p>
+            <ul>
+                <li><strong>Gold Mines:</strong> Their land was full of gold. Egypt wanted this gold for their temples.</li>
+                <li><strong>Archers:</strong> The people of Kush were famous for being amazing with a bow and arrow.</li>
+            </ul>
+            <div class="hint-box">
+                <span class="hint-icon">🏹</span>
+                <span>Egypt called Kush the <strong>"Land of the Bow"</strong>.</span>
+            </div>
+            <div class="btn-container">
+                <button class="btn-back" onclick="prevSlide()">Back</button>
+                <button class="btn-next" onclick="nextSlide()">Ramses II</button>
+            </div>
+        </div>
+
+        <!-- Slide 8: Ramses II -->
+        <div class="slide" id="slide-8">
+            <h2>4. Ramses the Great</h2>
+            <p><strong>Ramses II</strong> ruled for over 60 years! He is famous for building giant temples and huge statues.</p>
+            
+            <div class="img-placeholder">
+                <img src="https://static.wixstatic.com/media/b2863d_c676c03a575042a7acb24510e751abae~mv2.jpg" alt="Huge statues of Ramses II" onclick="openModal(this.src)">
+                <div class="click-hint" onclick="openModal(document.querySelector('#slide-8 img').src)">
+                    <span>🔍</span> Click to see the Giant Statues
+                </div>
+            </div>
+
+            <p>He also signed the world's first <strong>Peace Treaty</strong> with the Hittites.</p>
+            
+            <div class="btn-container">
+                <button class="btn-back" onclick="prevSlide()">Back</button>
+                <button class="btn-next" onclick="nextSlide()">King Tut</button>
+            </div>
+        </div>
+
+        <!-- Slide 9: King Tut -->
+        <div class="slide" id="slide-9">
+            <h2>5. King Tut: The Boy King</h2>
+            <p><strong>Tutankhamun</strong> (King Tut) became Pharaoh when he was only <strong>9 years old!</strong></p>
+            <p>Sadly, he died when he was only 19.</p>
+
+            <div class="img-placeholder">
+                <img src="https://static.wixstatic.com/media/b2863d_c8325d6c3c7c44398377e7d2bebe3b88~mv2.jpg" alt="Howard Carter discovering King Tut's Tomb" onclick="openModal(this.src)">
+                <div class="click-hint" onclick="openModal(document.querySelector('#slide-9 img').src)">
+                    <span>🔍</span> Click to see the Tomb Discovery
+                </div>
+            </div>
+
+            <p>He is famous because in 1922, <strong>Howard Carter</strong> found his tomb <strong>untouched</strong>. It was full of gold treasure!</p>
+            
+            <div class="btn-container">
+                <button class="btn-back" onclick="prevSlide()">Back</button>
+                <button class="btn-next" onclick="nextSlide()">Ramses III</button>
+            </div>
+        </div>
+
+        <!-- Slide 10: Ramses III -->
+        <div class="slide" id="slide-10">
+            <h2>6. Ramses III: The Defender</h2>
+            <p>Our last Pharaoh is <strong>Ramses III</strong>.</p>
+            <p>He was the last "Great" Pharaoh of the New Kingdom. He is famous for saving Egypt from invaders.</p>
+            <ul>
+                <li>He fought the <strong>"Sea Peoples"</strong> (pirates who came from the ocean).</li>
+                <li>He won the battle, but Egypt started to become weak after him.</li>
+            </ul>
+            <div class="hint-box">
+                <span class="hint-icon">🛡️</span>
+                <span>Ramses III <strong>defended</strong> Egypt, but the Golden Age was ending.</span>
+            </div>
+            <div class="btn-container">
+                <button class="btn-back" onclick="prevSlide()">Back</button>
+                <button class="btn-next" onclick="nextSlide()">Summary</button>
+            </div>
+        </div>
+
+        <!-- Slide 11: Summary -->
+        <div class="slide" id="slide-11">
+            <h2>Let's Remember</h2>
+            <ul>
+                <li><strong>Ahmose:</strong> Kicked out the Hyksos.</li>
+                <li><strong>Hatshepsut:</strong> The female Pharaoh who traded.</li>
+                <li><strong>Thutmose III:</strong> Conquered the <strong>Kingdom of Kush</strong>.</li>
+                <li><strong>Ramses II:</strong> The builder who made peace treaties.</li>
+                <li><strong>King Tut:</strong> The boy king (started at 9!) with the golden treasure.</li>
+                <li><strong>Ramses III:</strong> Defended Egypt from the Sea Peoples.</li>
+            </ul>
+            <div class="btn-container">
+                <button class="btn-back" onclick="prevSlide()">Back</button>
+                <button class="btn-next" onclick="nextSlide()">Final Quiz</button>
+            </div>
+        </div>
+
+        <!-- Slide 12: Quiz -->
+        <div class="slide" id="slide-12">
+            <h2>Final Quiz</h2>
+            <p>Match the Pharaoh or Kingdom to the fact!</p>
+
+            <!-- Q1 -->
+            <div style="margin-bottom: 20px;">
+                <p><strong>1. Who preferred Trade over War?</strong></p>
+                <button class="option-btn" onclick="checkAnswer(this, 'correct', 'q1-fb')">Hatshepsut</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'wrong', 'q1-fb')">Thutmose III</button>
+                <div id="q1-fb" class="feedback-msg"></div>
+            </div>
+
+            <!-- Q2 -->
+            <div style="margin-bottom: 20px;">
+                <p><strong>2. What was the Kingdom of Kush famous for?</strong></p>
+                <button class="option-btn" onclick="checkAnswer(this, 'wrong', 'q2-fb')">Building Pyramids of Ice.</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'correct', 'q2-fb')">Deep Gold Mines and Expert Archers.</button>
+                <div id="q2-fb" class="feedback-msg"></div>
+            </div>
+
+            <!-- Q3 -->
+            <div style="margin-bottom: 20px;">
+                <p><strong>3. Who signed the first Peace Treaty?</strong></p>
+                <button class="option-btn" onclick="checkAnswer(this, 'correct', 'q3-fb')">Ramses II (The Great)</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'wrong', 'q3-fb')">Ahmose</button>
+                <div id="q3-fb" class="feedback-msg"></div>
+            </div>
+
+            <!-- Q4 -->
+            <div style="margin-bottom: 20px;">
+                <p><strong>4. Why is King Tut famous?</strong></p>
+                <button class="option-btn" onclick="checkAnswer(this, 'correct', 'q4-fb')">His tomb was found full of gold treasures.</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'wrong', 'q4-fb')">He lived to be 100 years old.</button>
+                <div id="q4-fb" class="feedback-msg"></div>
+            </div>
+
+            <!-- Q5 -->
+            <div style="margin-bottom: 20px;">
+                <p><strong>5. Who did Ramses III fight to save Egypt?</strong></p>
+                <button class="option-btn" onclick="checkAnswer(this, 'correct', 'q5-fb')">The Sea Peoples</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'wrong', 'q5-fb')">The Space Aliens</button>
+                <div id="q5-fb" class="feedback-msg"></div>
+            </div>
+
+            <div class="btn-container">
+                <button class="btn-back" onclick="prevSlide()">Review</button>
+                <button class="btn-next" onclick="nextSlide()">Finish</button>
+            </div>
+        </div>
+
+        <!-- Slide 13: Finish -->
+        <div class="slide" id="slide-13">
+            <h2>Excellent Work, Gabriel!</h2>
+            <p>You are an expert on the New Kingdom and the Kingdom of Kush!</p>
+            <p>Click the button below to save your official report.</p>
+            
+            <button class="btn-pdf" onclick="generatePDF()">
+                Download My Pharaoh & Kush Report
+            </button>
+        </div>
+
+    </main>
+</div>
+
+<!-- Modal Structure for Images -->
+<div id="img-modal" class="modal-overlay" onclick="closeModal()">
+    <img id="modal-img-tag" src="" class="modal-content" alt="Expanded Image">
+    <button class="close-modal-btn">Close Image</button>
+</div>
+
+<script>
+    // --- State Management ---
+    let currentSlide = 1;
+    const totalSlides = 13; 
+    
+    // Tracks quiz answers for the PDF 
+    let quizResults = {
+        q1: 0,
+        q2: 0,
+        q3: 0,
+        q4: 0,
+        q5: 0
+    };
+
+    // --- Navigation ---
+    function showSlide(n) {
+        const slides = document.querySelectorAll('.slide');
+        slides.forEach(s => s.classList.remove('active'));
+        document.getElementById(`slide-${n}`).classList.add('active');
+        
+        const percent = ((n - 1) / (totalSlides - 1)) * 100;
+        document.getElementById('progress-bar').style.width = `${percent}%`;
+        
+        currentSlide = n;
+    }
+
+    function nextSlide() {
+        if (currentSlide < totalSlides) {
+            showSlide(currentSlide + 1);
+        }
+    }
+
+    function prevSlide() {
+        if (currentSlide > 1) {
+            showSlide(currentSlide - 1);
+        }
+    }
+
+    // --- Modal Functions ---
+    function openModal(imgSrc) {
+        document.getElementById('modal-img-tag').src = imgSrc;
+        document.getElementById('img-modal').classList.add('active');
+    }
+
+    function closeModal() {
+        document.getElementById('img-modal').classList.remove('active');
+    }
+
+    // --- Quiz Logic ---
+    function checkAnswer(btn, status, feedbackId) {
+        const parent = btn.parentElement;
+        const buttons = parent.querySelectorAll('.option-btn');
+        const feedback = document.getElementById(feedbackId);
+
+        buttons.forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+
+        const qKey = feedbackId.split('-')[0]; // "q1", "q2", etc.
+
+        if (status === 'correct') {
+            feedback.innerText = "Correct! You got it.";
+            feedback.className = "feedback-msg correct";
+            feedback.style.display = "block";
+            quizResults[qKey] = 1;
+        } else {
+            feedback.innerText = "Try again.";
+            feedback.className = "feedback-msg incorrect";
+            feedback.style.display = "block";
+            quizResults[qKey] = 2;
+        }
+    }
+
+    // --- PDF Generation ---
+    function generatePDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        
+        // Settings
+        const margin = 20;
+        const pageWidth = 210;
+        const contentWidth = pageWidth - (margin * 2);
+        let y = 20;
+        const date = new Date().toLocaleDateString();
+
+        // Helper to add text and advance Y position
+        function addLine(text, fontSize = 12, isBold = false) {
+            doc.setFont("helvetica", isBold ? "bold" : "normal");
+            doc.setFontSize(fontSize);
+            
+            // Text wrapping check
+            const splitText = doc.splitTextToSize(text, contentWidth);
+            
+            // Page break check
+            if (y + (splitText.length * 7) > 280) {
+                doc.addPage();
+                y = 20;
+            }
+
+            doc.text(splitText, margin, y);
+            y += (splitText.length * 7) + 2; 
+        }
+
+        // Header
+        addLine("Student: Gabriel Mendoza", 16, true);
+        addLine(`Date: ${date}`, 12);
+        addLine("Subject: Ancient Egypt - New Kingdom & Kush", 12);
+        
+        y += 5;
+        doc.setDrawColor(150);
+        doc.line(margin, y, pageWidth - margin, y);
+        y += 10;
+
+        // Content Summary
+        addLine("Summary of Learning:", 14, true);
+        y += 2;
+        addLine("1. Ahmose defeated the Hyksos invaders to start the New Kingdom.");
+        addLine("2. Hatshepsut was a female Pharaoh who focused on Trade (Expedition to Punt).");
+        addLine("3. Thutmose III was a Warrior King who conquered the Kingdom of Kush.");
+        addLine("4. The Kingdom of Kush (Nubia) was famous for Gold Mines and Expert Archers.");
+        addLine("5. Ramses II (The Great) built giant statues and made the first Peace Treaty.");
+        addLine("6. King Tut was the 'Boy King' (started at 9) with the untouched golden treasure.");
+        addLine("7. Ramses III fought the 'Sea Peoples' to defend Egypt.");
+
+        y += 10;
+        
+        // Quiz Report
+        addLine("Quiz Performance:", 14, true);
+        y += 2;
+
+        const results = [
+            { id: 'q1', text: "Q1: Hatshepsut (Trade vs War)" },
+            { id: 'q2', text: "Q2: Kingdom of Kush (Gold & Archers)" },
+            { id: 'q3', text: "Q3: Ramses II (Peace Treaty)" },
+            { id: 'q4', text: "Q4: King Tut (Treasures)" },
+            { id: 'q5', text: "Q5: Ramses III (Sea Peoples)" }
+        ];
+
+        let score = 0;
+
+        results.forEach(item => {
+            const statusVal = quizResults[item.id];
+            let statusText = "Not Answered";
+            if (statusVal === 1) { statusText = "Correct"; score++; }
+            if (statusVal === 2) statusText = "Incorrect";
+            
+            addLine(`${item.text}: ${statusText}`);
+        });
+
+        y += 5;
+        addLine(`Final Score: ${score} / 5`, 12, true);
+
+        // Save
+        doc.save("Gabriel_NewKingdom_Kush.pdf");
+    }
+
+    // Initialize
+    showSlide(1);
+
+</script>
+
+</body>
+</html>
